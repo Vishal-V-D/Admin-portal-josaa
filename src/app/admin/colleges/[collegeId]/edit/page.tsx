@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation'; // <-- Import useParams
 import PageContainer from '@/components/layout/page-container';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,7 +19,7 @@ import {
   IconSchool,
 } from '@tabler/icons-react';
 
-// Mock data for colleges (This would ideally be a separate data file or API call)
+// Mock data for colleges
 const allColleges = [
   {
     id: '1',
@@ -89,10 +89,10 @@ const allColleges = [
   },
 ];
 
-type Params = { collegeId: string };
-
-export default function EditCollegePage({ params }: { params: Params }) {
-  const { collegeId } = params;
+// No longer need to specify props for the component itself
+export default function EditCollegePage() {
+  const params = useParams(); // <-- Get params from the hook
+  const collegeId = params.collegeId as string; // <-- Access the parameter here
   const [collegeData, setCollegeData] = useState({
     id: '',
     name: '',
@@ -110,7 +110,7 @@ export default function EditCollegePage({ params }: { params: Params }) {
   useEffect(() => {
     const collegeToEdit = allColleges.find(c => c.id === collegeId);
     if (!collegeToEdit) {
-      notFound(); // This will show the standard 404 page if the ID is not found
+      notFound();
     } else {
       setCollegeData(collegeToEdit);
     }
@@ -121,7 +121,7 @@ export default function EditCollegePage({ params }: { params: Params }) {
     if (showSuccessMessage) {
       const timer = setTimeout(() => {
         setShowSuccessMessage(false);
-      }, 3000); // Hide the message after 3 seconds
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [showSuccessMessage]);
@@ -137,7 +137,6 @@ export default function EditCollegePage({ params }: { params: Params }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Updated College Data:', collegeData);
-    // In a real application, you would send this data to an API
     setShowSuccessMessage(true);
   };
 
@@ -167,7 +166,7 @@ export default function EditCollegePage({ params }: { params: Params }) {
                       id="id"
                       name="id"
                       value={collegeData.id}
-                      disabled // ID is not editable
+                      disabled
                       className="pl-9"
                     />
                   </div>
