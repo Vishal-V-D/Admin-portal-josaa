@@ -235,7 +235,6 @@ const suspiciousActivityData = [
 ];
 
 
-// Removed the 'isSidebarOpen' prop from the function signature
 export default function AdminDashboardPage() {
   const allExams = exams.filter(exam => exam.type === 'All India');
   const collegeSpecificExams = exams.filter(exam => exam.type === 'College Specific');
@@ -256,7 +255,7 @@ export default function AdminDashboardPage() {
     startDate.setDate(today.getDate() - daysToSubtract);
 
     if (timeRange === "all") {
-        return userActivityTrendsData;
+      return userActivityTrendsData;
     }
 
     return userActivityTrendsData.filter((item) => {
@@ -267,7 +266,6 @@ export default function AdminDashboardPage() {
 
   return (
     <PageContainer>
-      {/* Removed the 'cn' utility logic and hardcoded full width */}
       <div className="flex-1 flex-col space-y-6 min-h-screen max-w-none mx-0">
         {/* Main Dashboard Header */}
         <div className="flex items-center justify-between">
