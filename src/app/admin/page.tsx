@@ -235,7 +235,8 @@ const suspiciousActivityData = [
 ];
 
 
-export default function AdminDashboardPage({ isSidebarOpen }: { isSidebarOpen: boolean }) {
+// Removed the 'isSidebarOpen' prop from the function signature
+export default function AdminDashboardPage() {
   const allExams = exams.filter(exam => exam.type === 'All India');
   const collegeSpecificExams = exams.filter(exam => exam.type === 'College Specific');
   const [timeRange, setTimeRange] = useState("all");
@@ -253,7 +254,7 @@ export default function AdminDashboardPage({ isSidebarOpen }: { isSidebarOpen: b
     const today = new Date("2025-08-29"); // Mock current date
     const startDate = new Date(today);
     startDate.setDate(today.getDate() - daysToSubtract);
-    
+
     if (timeRange === "all") {
         return userActivityTrendsData;
     }
@@ -266,13 +267,8 @@ export default function AdminDashboardPage({ isSidebarOpen }: { isSidebarOpen: b
 
   return (
     <PageContainer>
-      <div className={cn(
-        "flex-1 flex-col space-y-6 min-h-screen",
-        {
-          "max-w-7xl mx-auto": isSidebarOpen, // Centered and max-width when sidebar is open
-          "max-w-none mx-0": !isSidebarOpen, // Full width and no margin when sidebar is closed
-        }
-      )}>
+      {/* Removed the 'cn' utility logic and hardcoded full width */}
+      <div className="flex-1 flex-col space-y-6 min-h-screen max-w-none mx-0">
         {/* Main Dashboard Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-50">
