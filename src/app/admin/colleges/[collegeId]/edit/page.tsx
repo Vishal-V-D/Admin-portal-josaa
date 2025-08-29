@@ -89,13 +89,9 @@ const allColleges = [
   },
 ];
 
-interface EditCollegePageProps {
-  params: {
-    collegeId: string;
-  };
-}
+type Params = { collegeId: string };
 
-export default function EditCollegePage({ params }: EditCollegePageProps) {
+export default function EditCollegePage({ params }: { params: Params }) {
   const { collegeId } = params;
   const [collegeData, setCollegeData] = useState({
     id: '',
@@ -147,7 +143,7 @@ export default function EditCollegePage({ params }: EditCollegePageProps) {
 
   return (
     <PageContainer>
-      <div className="relative flex-1 flex-col space-y-6 min-h-screen">
+      <div className="relative flex flex-col space-y-6 min-h-screen">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold tracking-tight">
             Edit College: {collegeData.name}
