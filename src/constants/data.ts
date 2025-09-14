@@ -30,7 +30,7 @@ export const navItems: NavItem[] = [
   },
   {
     title: 'Users',
-    url: '/admin/users',
+    url: '/admin/users/all',
     icon: 'user',
     isActive: false,
     shortcut: ['u', 's'],
@@ -53,7 +53,7 @@ export const navItems: NavItem[] = [
     items: [
       {
         title: 'College List',
-        url: '/admin/colleges/',
+        url: '/admin/colleges',
         icon: 'user',
         shortcut: ['l', 'c']
       },
@@ -89,7 +89,7 @@ export const navItems: NavItem[] = [
   },
   {
     title: 'Predictions',
-    url: '/admin/predictions',
+    url: '/admin/predictions/',
     icon: 'chart',
     isActive: false,
     shortcut: ['p', 'r'],
@@ -107,7 +107,24 @@ export const navItems: NavItem[] = [
         shortcut: ['e', 'p']
       }
     ]
-  },
+  },{
+  title: 'Updates',
+  url: '/updates',
+  icon: 'messages',
+  isActive: false,
+  shortcut: ['u', 'p'],
+  items: [
+    {
+      title: 'Post Updates',
+      url: '/updates',
+      icon: 'post',
+      shortcut: ['g', 'u']
+    }
+    
+   
+  ]
+}
+,
   {
     title: 'Logs',
     url: '/logs',

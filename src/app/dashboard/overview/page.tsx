@@ -235,7 +235,7 @@ const suspiciousActivityData = [
 ];
 
 
-export default function AdminDashboardPage({ isSidebarOpen }: { isSidebarOpen: boolean }) {
+export default function AdminDashboardPage() {
   const allExams = exams.filter(exam => exam.type === 'All India');
   const collegeSpecificExams = exams.filter(exam => exam.type === 'College Specific');
   const [timeRange, setTimeRange] = useState("all");
@@ -253,9 +253,9 @@ export default function AdminDashboardPage({ isSidebarOpen }: { isSidebarOpen: b
     const today = new Date("2025-08-29"); // Mock current date
     const startDate = new Date(today);
     startDate.setDate(today.getDate() - daysToSubtract);
-    
+
     if (timeRange === "all") {
-        return userActivityTrendsData;
+      return userActivityTrendsData;
     }
 
     return userActivityTrendsData.filter((item) => {
@@ -266,13 +266,7 @@ export default function AdminDashboardPage({ isSidebarOpen }: { isSidebarOpen: b
 
   return (
     <PageContainer>
-      <div className={cn(
-        "flex-1 flex-col space-y-6 min-h-screen",
-        {
-          "max-w-7xl mx-auto": isSidebarOpen, // Centered and max-width when sidebar is open
-          "max-w-none mx-0": !isSidebarOpen, // Full width and no margin when sidebar is closed
-        }
-      )}>
+      <div className="flex-1 flex-col space-y-6 min-h-screen max-w-none mx-0">
         {/* Main Dashboard Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-50">
@@ -365,7 +359,7 @@ export default function AdminDashboardPage({ isSidebarOpen }: { isSidebarOpen: b
                   </ul>
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
-                  <Link href="/logs">
+                  <Link href="/admin/logs">
                     <Button variant="link" className="text-primary">
                       View All Logs <IconArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -579,7 +573,7 @@ export default function AdminDashboardPage({ isSidebarOpen }: { isSidebarOpen: b
                   </ul>
                 </CardContent>
                 <CardFooter className="flex justify-end pt-0">
-                  <Link href="/logs">
+                  <Link href="/admin/logs/suspicious">
                     <Button variant="link" className="text-primary">
                       View All <IconArrowRight className="ml-2 h-4 w-4" />
                     </Button>
