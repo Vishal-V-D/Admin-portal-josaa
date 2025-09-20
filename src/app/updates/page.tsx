@@ -359,7 +359,7 @@ export default function AnnouncementsPage() {
 
     const fetchAnnouncements = async () => {
         try {
-            const res = await fetch('http://localhost:8000/api/announcements');
+            const res = await fetch('https://josaa-admin-backend-1.onrender.com/api/announcements');
             if (!res.ok) throw new Error('Failed to fetch announcements');
             const data = await res.json();
             setAnnouncements(data);
@@ -439,8 +439,8 @@ export default function AnnouncementsPage() {
 
             const method = isEditMode ? 'PUT' : 'POST';
             const url = isEditMode
-                ? `http://localhost:8000/api/announcements/${editingAnnouncement.id}`
-                : 'http://localhost:8000/api/announcements';
+                ? `https://josaa-admin-backend-1.onrender.com/api/announcements/${editingAnnouncement.id}`
+                : 'https://josaa-admin-backend-1.onrender.com/api/announcements';
 
             const res = await fetch(url, {
                 method,
@@ -476,7 +476,7 @@ export default function AnnouncementsPage() {
             return;
         }
         try {
-            const res = await fetch(`http://localhost:8000/api/announcements/${id}`, {
+            const res = await fetch(`https://josaa-admin-backend-1.onrender.com/api/announcements/${id}`, {
                 method: 'DELETE',
             });
             if (!res.ok) throw new Error('Failed to delete announcement');
