@@ -107,7 +107,7 @@ export default function CollegesPage() {
          allFetchedColleges = [...allFetchedColleges, ...newCache[type]];
        } else {
          const endpoint = apiMap[type as keyof typeof apiMap];
-         const url = `http://localhost:8000/api/${endpoint}`;
+         const url = `https://josaa-admin-backend-1.onrender.com/api/${endpoint}`;
          const response = await fetch(url);
          if (!response.ok) {
            throw new Error(`Failed to fetch data from ${url}`);
@@ -140,7 +140,7 @@ export default function CollegesPage() {
    
    try {
      const endpoint = apiMap[type as keyof typeof apiMap];
-     const url = `http://localhost:8000/api/${endpoint}`;
+     const url = `https://josaa-admin-backend-1.onrender.com/api/${endpoint}`;
      const response = await fetch(url);
      if (!response.ok) {
        throw new Error(`Failed to fetch data for ${type}`);
@@ -167,7 +167,7 @@ const handleDeleteCollege = async (
 
   try {
     const response = await fetch(
-      `http://localhost:8000/api/college/${collegeId}/${collegeType}`, // ✅ match backend route
+      `https://josaa-admin-backend-1.onrender.com/api/college/${collegeId}/${collegeType}`, // ✅ match backend route
       {
         method: 'DELETE',
       }
