@@ -118,7 +118,7 @@ export default function ExamPage() {
         }
       );
       const collegeExamsPromise = fetch(
-        `http://localhost:${API_PORT}/college-exams`
+        `https://josaa-admin-backend-1.onrender.com/college-exams`
       ).then((res) => {
         if (!res.ok) throw new Error('Failed to fetch college exams');
         return res.json();
@@ -154,7 +154,7 @@ export default function ExamPage() {
     setDeleteLoading(id);
     try {
       const endpoint = isCollegeExam ? 'college-exams' : 'exams';
-      const response = await fetch(`http://localhost:${API_PORT}/${endpoint}/${id}`, {
+      const response = await fetch(`https://josaa-admin-backend-1.onrender.com/${endpoint}/${id}`, {
         method: 'DELETE',
       });
 
