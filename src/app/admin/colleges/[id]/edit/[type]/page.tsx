@@ -13,12 +13,11 @@ import Link from 'next/link';
 import PageContainer from '@/components/layout/page-container';
 
 interface CollegeEditPageProps {
-  params: {
-    id: string;
-    type: string;
-  };
+  params: Promise<{ id: string; type: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
+// ... other interfaces and helper functions ...
 interface CollegeData {
   Name: string;
   Type: string;
@@ -138,7 +137,7 @@ const renderDisplay = (key: string, value: any) => {
                 <tr key={index}>
                   <td className="px-4 py-2 whitespace-nowrap">{item.course}</td>
                   <td className="px-4 py-2 whitespace-nowrap">{item.eligibility}</td>
-                  <td className="px-4 py-2 whitespace-nowrap">{item.fees_1st_year || item.total_fees}</td>
+                  <td className="px-4 py-2 whitespace-now-wrap">{item.fees_1st_year || item.total_fees}</td>
                 </tr>
               ))}
             </tbody>
@@ -225,19 +224,35 @@ const renderDisplay = (key: string, value: any) => {
 
 export default function CollegeEditPage({ params }: CollegeEditPageProps) {
   const router = useRouter();
-  const { id, type } = params;
+  const [resolvedParams, setResolvedParams] = useState<{ id: string; type: string } | null>(null);
   const [fullData, setFullData] = useState<FullData | null>(null);
   const [basicData, setBasicData] = useState<CollegeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
+  // Resolve params Promise
   useEffect(() => {
+    const resolveParams = async () => {
+      try {
+        const resolved = await params;
+        setResolvedParams(resolved);
+      } catch (err) {
+        setError('Failed to load page parameters');
+        setLoading(false);
+      }
+    };
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (!resolvedParams) return;
+    
     const fetchCollegeData = async () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`http://localhost:8000/api/college/${id}/${type}`);
+        const response = await fetch(`https://josaa-admin-backend-1.onrender.com/api/college/${resolvedParams.id}/${resolvedParams.type}`);
         if (!response.ok) throw new Error('Failed to fetch college data.');
         const data: BackendResponse = await response.json();
         setFullData(data.full_data);
@@ -248,8 +263,9 @@ export default function CollegeEditPage({ params }: CollegeEditPageProps) {
         setLoading(false);
       }
     };
-    if (id && type) fetchCollegeData();
-  }, [id, type]);
+    
+    fetchCollegeData();
+  }, [resolvedParams]);
 
   const handleBasicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type: inputType } = e.target;
@@ -263,7 +279,7 @@ export default function CollegeEditPage({ params }: CollegeEditPageProps) {
   };
 
   const handleUpdate = async () => {
-    if (!fullData || !basicData) return;
+    if (!fullData || !basicData || !resolvedParams) return;
     setIsUpdating(true);
     try {
       const updatePayload = {
@@ -272,7 +288,7 @@ export default function CollegeEditPage({ params }: CollegeEditPageProps) {
         basic_data: basicData,
       };
 
-      const response = await fetch(`http://localhost:8000/api/college/${id}/${type}`, {
+      const response = await fetch(`https://josaa-admin-backend-1.onrender.com/api/college/${resolvedParams.id}/${resolvedParams.type}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatePayload),
